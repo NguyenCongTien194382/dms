@@ -1,0 +1,36 @@
+.header {
+    margin-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header img {
+    margin-right: 16px;
+}
+
+.username {
+    font-weight: bold;
+}
+
+.role {
+    font-size: 14px;
+    font-weight: 400;
+    color: #828282;
+}
+
+button {
+    padding: 8px 24px;
+    background-color: #044d90;
+    border-radius: 8px;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    text-transform: uppercase;
+}
