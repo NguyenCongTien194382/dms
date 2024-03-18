@@ -1,22 +1,27 @@
 import React from "react";
-// import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-// import Login from "./pages/Login/Login";
-import Navbar from "./components/Navbar/Navbar"
-import Header from './components/Header/Header'
-import ListDevice from "./components/ListDevice/ListDevice";
-import Login from "./components/Login/Login";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./contexts/authContext";
+import Home from './pages/Home'
 import './App.css';
 
 function App() {
+  const routesArray = [
+    {
+      path: "/",
+      element: <Home />,
+    },
+  ];
+
   return (
-    <Login />
-    // <div className="main">
-    //   <Navbar />
-    //   <div className="content">
-    //     <Header />
-    //     <ListDevice />
-    //   </div>
-    // </div>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          {routesArray.map((route, index) => (
+            <Route key={index} path={route.path} element={route.element} />
+          ))}
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 
