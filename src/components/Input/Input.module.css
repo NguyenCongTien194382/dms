@@ -1,0 +1,21 @@
+.input {
+    display: flex;
+    align-items: center;
+    border: 2px #aaaaaa5e solid;
+    background-color: rgb(255, 255, 255);
+    /* background-color: rgba(255, 255, 255, 0.8); */
+    border-radius: 8px;
+    padding: 0 12px;
+}
+
+input[type='text'] {
+    font-size: 16px;
+    border: none;
+    outline: none;
+    width: 100%;
+    padding: 8px 8px;
+}
+
+.clear {
+    cursor: pointer;
+}

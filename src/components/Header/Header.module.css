@@ -26,11 +26,13 @@
 }
 
 button {
-    padding: 8px 24px;
+    padding: 8px 8px;
+    /* padding: 8px 24px; */
     background-color: #044d90;
     border-radius: 8px;
     border: none;
     color: #fff;
     cursor: pointer;
     text-transform: uppercase;
+    border: 2px #aaaaaa5e solid;
 }

@@ -1,0 +1,99 @@
+.select {
+    display: inline-block;
+    position: relative;
+}
+
+.select+.select {
+    margin-left: 8px;
+}
+
+.label {
+    padding: 4px 12px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 6px;
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    gap: 8px;
+    border: 2px #aaaaaa5e solid;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.7);
+    font-weight: 500;
+}
+
+/* .box_select {
+    display: none;
+    width: 100%;
+    border-radius: 8px;
+    position: absolute;
+    right: 0;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
+    overflow-y: scroll;
+    max-height: 260px;
+} */
+
+.box_select {
+    display: none;
+    width: 100%;
+    border-radius: 8px;
+    position: absolute;
+    right: 0;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
+    max-height: 260px;
+    overflow-y: auto;
+    z-index: 100;
+}
+
+.select:hover .box_select {
+    display: block;
+}
+
+.box_select::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 8px;
+    height: calc(100% - 16px);
+    /* background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 100%); */
+    border-radius: 0 8px 8px 0;
+}
+
+.box_select:hover::after,
+.box_select.scrollable::after {
+    height: auto;
+}
+
+
+.box_select::-webkit-scrollbar {
+    width: 4px;
+}
+
+.box_select::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+
+.select:hover .box_select {
+    display: block;
+}
+
+.option {
+    padding: 12px 16px;
+    cursor: pointer;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.option+.option {
+    border-top: 1px #cccccc55 solid;
+}
+
+.option {
+
+}
+
+.option_name {}
