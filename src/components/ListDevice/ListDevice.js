@@ -1,35 +1,63 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState, version } from 'react'
 import { Table } from 'antd'
 import { FaArrowRotateLeft } from "react-icons/fa6";
 import styles from './ListDevice.module.css'
+import requestApi from '../../helpers/api';
 import Select from '../Select/Select'
 import Input from '../Input/Input'
 
 const ListDevice = () => {
     const [pageCurrent, setPageCurrent] = useState(1)
+    const [listDevice, setListDevice] = useState([])
+    const [deviceType, setDeviceType] = useState([])
+    const [osVersion, setOsVersion] = useState([])
+    const list_device_status = [{ label: 'Đã mượn', value: 'Đã mượn' }, { label: 'Đang mượn', value: 'Đang mượn' }]
+    const list_status = [{ label: 'Bình thường', value: 'Bình thường' }, { label: 'Hỏng', value: 'Hỏng' }, { label: 'Đã mất', value: 'Đã mất' }]
+    const list_device_os = [{ label: 'IOS', value: 'IOS' }, { label: 'Android', value: 'Android' }]
 
-    const phoneOptions = [
-        { value: 'iphone', label: 'iPhone' },
-        { value: 'samsung', label: 'Samsung' },
-        { value: 'google', label: 'Google Pixel' },
-        { value: 'huawei', label: 'Huawei' },
-        { value: 'oneplus', label: 'OnePlus' },
-        { value: 'xiaomi', label: 'Xiaomi' },
-        { value: 'sony', label: 'Sony Xperia' },
-        { value: 'lg', label: 'LG' },
-        { value: 'oppo', label: 'OPPO' },
-        { value: 'vivo', label: 'Vivo' }
-    ];
+    useEffect(() => {
+        handleGetListDeviceType()
+        handleGetListOsVersion()
+        handleGetListDevice()
+    }, [])
+
+    const handleGetListDeviceType = () => {
+        requestApi('/device_type', 'GET', {})
+            .then(res => {
+                const device_type = res.data.data.map(device => ({ value: device.name, label: device.name }))
+                setDeviceType(device_type)
+            })
+            .catch(err => { })
+    }
+
+    const handleGetListOsVersion = () => {
+        requestApi('/device-os-version', 'GET', {})
+            .then(res => {
+                const os_version = res.data.data.os_version.map(version => ({ value: version, label: version }))
+                setOsVersion(os_version)
+            })
+            .catch(err => { })
+    }
+
+    const handleGetListDevice = () => {
+        requestApi('/devices?offset=1&limit=20&sort_field=device_code&sort_type=asc', 'GET', {})
+            .then(res => {
+                setListDevice(res.data.data.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
     const columns = [
         {
             title: 'STT',
-            dataIndex: 'name',
             width: '5%',
             render: (text, record, index) => index + 1 + (pageCurrent - 1) * 20,
         },
         {
             title: 'Mã thiết bị',
-            dataIndex: 'mtb',
+            dataIndex: 'device_code',
             width: '12%',
             sorter: {
                 compare: (a, b) => a.mtb - b.mtb,
@@ -37,17 +65,17 @@ const ListDevice = () => {
         },
         {
             title: 'Tên thiết bị',
-            dataIndex: 'name',
+            dataIndex: 'device_name',
             width: '12%',
         },
         {
             title: 'OS',
-            dataIndex: 'os',
+            dataIndex: 'device_os',
             width: '5%',
         },
         {
             title: 'Version',
-            dataIndex: 'version',
+            dataIndex: 'os_version',
             width: '7%',
         },
         {
@@ -57,53 +85,27 @@ const ListDevice = () => {
         },
         {
             title: 'Sử dụng gần nhất',
-            dataIndex: 'address',
+            dataIndex: '',
             width: '10%',
             key: 'address',
         },
         {
             title: 'Trạng thái',
-            dataIndex: 'address',
+            dataIndex: '',
             width: '10%',
             key: 'address',
         },
         {
             title: 'Tình trạng',
-            dataIndex: 'address',
+            dataIndex: '',
             width: '10%',
             key: 'address',
         }
     ];
 
-
-    const data = [
-        {
-            key: '1',
-            name: 'John Brown',
-            age: 32,
-            address: 'New York No. 1 Lake Park1',
-            tags: ['nice', 'developer'],
-        },
-        {
-            key: '2',
-            name: 'Jim Green',
-            age: 42,
-            address: 'London No. 1 Lake Park2',
-            tags: ['loser'],
-        },
-        {
-            key: '3',
-            name: 'Joe Black',
-            age: 32,
-            address: 'Sydney No. 1 Lake Park3',
-            tags: ['cool', 'teacher'],
-        },
-    ];
-
     const handleSelectChange = (newSelectedOptions) => {
         console.log('test')
     };
-
 
     return (
         <div>
@@ -121,36 +123,36 @@ const ListDevice = () => {
             </div>
             <div className={styles.select}>
                 <Select
-                    options={phoneOptions}
+                    options={deviceType}
                     label='Loại thiết bị'
                     onChange={handleSelectChange}
                 />
                 <Select
-                    options={phoneOptions}
+                    options={list_device_status}
                     label='Trạng thái thiết bị'
                     onChange={handleSelectChange}
                 />
                 <Select
-                    options={phoneOptions}
+                    options={list_status}
                     label='Tình trạng thiết bị'
                     onChange={handleSelectChange}
                 />
                 <Select
-                    options={phoneOptions}
+                    options={list_device_os}
                     label='Hệ điều hành'
                     onChange={handleSelectChange}
                 />
                 <Select
-                    options={phoneOptions}
+                    options={osVersion}
                     label='Phiên bản'
                     onChange={handleSelectChange}
                 />
             </div>
             <Table
                 columns={columns}
-                dataSource={data}
+                dataSource={listDevice}
                 // rowClassName={(record, index) => index % 2 === 0 ? '' : 'bg3A7EBD'}
-                scroll={{ y: '1600px' }}
+                scroll={{ y: '600px' }}
                 pagination={{
                     style: { paddingBottom: 30, justifyContent: 'center' },
                     current: pageCurrent,
@@ -161,7 +163,6 @@ const ListDevice = () => {
                         }
                     },
                 }}
-
             />
         </div>
     )

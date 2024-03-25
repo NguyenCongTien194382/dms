@@ -6,6 +6,12 @@ import { useAuth } from '../../contexts/authContext'
 const Header = () => {
     const { currentUser } = useAuth()
 
+    const handleLogout = () => {
+        doSignOut()
+        localStorage.removeItem('user_token')
+        localStorage.removeItem('user_info')
+    }
+
     return (
         <div className={styles.header}>
             <div className={styles.user}>
@@ -18,7 +24,7 @@ const Header = () => {
                     <div className={styles.role}>Admin</div>
                 </div>
             </div>
-            <button onClick={() => doSignOut()}>Đăng xuất</button>
+            <button onClick={() => handleLogout()}>Đăng xuất</button>
         </div>
     )
 }
