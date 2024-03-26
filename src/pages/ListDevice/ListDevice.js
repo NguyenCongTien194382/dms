@@ -3,10 +3,11 @@ import { Table } from 'antd'
 import { FaArrowRotateLeft } from "react-icons/fa6";
 import styles from './ListDevice.module.css'
 import requestApi from '../../helpers/api';
-import Select from '../Select/Select'
-import Input from '../Input/Input'
+import Input from '../../components/Input/Input'
+import Select from '../../components/Select/Select'
 
 const ListDevice = () => {
+    console.log('tesst')
     const [pageCurrent, setPageCurrent] = useState(1)
     const [listDevice, setListDevice] = useState([])
     const [deviceType, setDeviceType] = useState([])

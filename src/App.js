@@ -1,27 +1,20 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./contexts/authContext";
-import Home from './pages/Home'
 import './App.css';
+import { Routes, Route } from 'react-router-dom';
+import PrivateRoutes from './layout/PrivateRoutes';
+import PublicRoutes from './layout/PublicRoutes';
+import Login from './pages/Login/Login'
+import ListDevice from './pages/ListDevice/ListDevice';
 
 function App() {
-  const routesArray = [
-    {
-      path: "/",
-      element: <Home />,
-    },
-  ];
-
   return (
-    <AuthProvider>
-      <Router>
-        <Routes>
-          {routesArray.map((route, index) => (
-            <Route key={index} path={route.path} element={route.element} />
-          ))}
-        </Routes>
-      </Router>
-    </AuthProvider>
+    <Routes>
+      <Route element={<PrivateRoutes />}>
+        <Route path='/list-device' element={<ListDevice />} />
+      </Route>
+      <Route element={<PublicRoutes />}>
+        <Route path='/' element={<Login />} />
+      </Route>
+    </Routes>
   );
 }
 
