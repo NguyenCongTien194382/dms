@@ -18,6 +18,7 @@ const Select = ({ options, label, onChange }) => {
         }
     };
 
+    console.log(checkedItems)
     return (
         <div className={styles.select}>
             <div className={styles.label}>
